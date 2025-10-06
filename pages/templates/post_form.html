@@ -3,14 +3,6 @@
    {{ form.instance.pk|yesno:"Edit Post, Create New Post" }}
 {% endblock %}
 {% block content %}
-   {% if messages %}
-      <ul>
-         {% for message in messages %}
-            <li>{{ message }}</li>
-         {% endfor %}
-      </ul>
-   {% endif %}
-   <hr>
    <h1>{{ form.instance.pk|yesno:"Edit Post, Create New Post" }}</h1>
    <form method="POST">
       {% csrf_token %}

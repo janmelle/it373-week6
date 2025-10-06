@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from pages import views as page_views
+from pages.views_auth import user_login, user_logout
 
 handler404 = 'pages.views.page_not_found_view'
 handler500 = 'pages.views.server_error_view'
@@ -24,4 +25,9 @@ handler500 = 'pages.views.server_error_view'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
+]
+
+urlpatterns += [
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
 ]

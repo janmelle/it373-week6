@@ -1,8 +1,11 @@
+# from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 # Create your models here.
 class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
     title = models.CharField(max_length=100, validators=[MinLengthValidator(3)])
     body = models.TextField(validators=[MinLengthValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)
@@ -11,6 +14,9 @@ class Post(models.Model):
         ordering = ['-created_at']
         constraints = [
             models.UniqueConstraint(fields=['title'], name='unique_post_title')
+        ]
+        permissions = [
+            ('moderate_post', 'Can moderate posts')
         ]
     
     def __str__(self):
